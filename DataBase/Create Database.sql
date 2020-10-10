@@ -15,8 +15,8 @@
 CREATE DATABASE IF NOT EXISTS "main";
 USE "main";
 
--- Dumping structure for table main.Catagory
-CREATE TABLE IF NOT EXISTS "Catagory" (
+-- Dumping structure for table main.Category
+CREATE TABLE IF NOT EXISTS "Category" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"name"	TEXT NOT NULL UNIQUE
 );
@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS "Game" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"gameround_id"	INTEGER NOT NULL,
 	"team_id"	INTEGER,
-	"result"	INTEGER
+	"result"	TEXT,
+	FOREIGN KEY("gameround_id") REFERENCES "GameRound"("id"),
+	FOREIGN KEY("team_id") REFERENCES "TeamName"("id")
 );
 
 -- Data exporting was unselected.
@@ -38,7 +40,10 @@ CREATE TABLE IF NOT EXISTS "GameRound" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"time_id"	INTEGER NOT NULL,
 	"gametype_id"	INTEGER NOT NULL,
-	"word_id"	INTEGER NOT NULL
+	"word_id"	INTEGER NOT NULL,
+	FOREIGN KEY("time_id") REFERENCES "Time"("id"),
+	FOREIGN KEY("gametype_id") REFERENCES "GameType"("id"),
+	FOREIGN KEY("word_id") REFERENCES "Word"("id")
 );
 
 -- Data exporting was unselected.
@@ -63,7 +68,7 @@ CREATE TABLE IF NOT EXISTS "TeamName" (
 CREATE TABLE IF NOT EXISTS "Time" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"name"	TEXT NOT NULL UNIQUE,
-	"Field3"	INTEGER NOT NULL
+	"duration"	INTEGER NOT NULL
 );
 
 -- Data exporting was unselected.
@@ -72,7 +77,8 @@ CREATE TABLE IF NOT EXISTS "Time" (
 CREATE TABLE IF NOT EXISTS "Word" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"name"	TEXT NOT NULL UNIQUE,
-	"catagory_id"	INTEGER NOT NULL
+	"catagory_id"	INTEGER NOT NULL,
+	FOREIGN KEY("catagory_id") REFERENCES "Category"("id")
 );
 
 -- Data exporting was unselected.
